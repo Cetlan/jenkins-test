@@ -6,4 +6,4 @@ class TestOps(unittest.TestCase):
 		self.assertEqual(add(1, 2), 3)
 
 	def test_sub(self):
-		self.assertEqual(sub(4,3), 1)
+		self.assertEqual(sub(3, 4), 1)
