@@ -15,13 +15,13 @@ pipeline {
                 }
             }
         }
-    }
-    post {
-        always {
-            withPythonEnv("System-CPython-2.7") {
-                sh 'coverage xml'
+        stage("Coverage Report") {
+            steps {
+                withPythonEnv("System-CPython-2.7") {
+                    sh 'coverage xml'
+                }
+                publishCoverage adapters: [coberturaAdapter('**/coverage.xml')], calculateDiffForChangeRequests: true, failBuildIfCoverageDecreasedInChangeRequest: true, failNoReports: true, failUnstable: true, globalThresholds: [[failUnhealthy: true, thresholdTarget: 'Aggregated Report', unstableThreshold: 86.0]], sourceFileResolver: sourceFiles('STORE_LAST_BUILD')
             }
-            publishCoverage adapters: [coberturaAdapter('**/coverage.xml')], calculateDiffForChangeRequests: true, failBuildIfCoverageDecreasedInChangeRequest: true, failNoReports: true, failUnstable: true, globalThresholds: [[failUnhealthy: true, thresholdTarget: 'Aggregated Report', unstableThreshold: 86.0]], sourceFileResolver: sourceFiles('STORE_LAST_BUILD')
         }
     }
 }
