@@ -20,12 +20,12 @@ pipeline {
                 }
             }
         }
-        stage("Coverage") {
+        stage("Code Coverage") {
             steps {
                 withPythonEnv("System-CPython-2.7") {
                     sh 'coverage xml'
                 }
-                publishCoverage adapters: [istanbulCoberturaAdapter(path: '**/coverage.xml', thresholds: [[thresholdTarget: 'Aggregated Report', unstableThreshold: 95.0]])], calculateDiffForChangeRequests: true, failBuildIfCoverageDecreasedInChangeRequest: true, failUnhealthy: true, failUnstable: true, globalThresholds: [[thresholdTarget: 'Aggregated Report', unstableThreshold: 90.0]], sourceFileResolver: sourceFiles('STORE_LAST_BUILD')
+                publishCoverage adapters: [istanbulCoberturaAdapter(path: '**/coverage.xml', thresholds: [[failUnhealthy: true, thresholdTarget: 'Line', unhealthyThreshold: 100.0, unstableThreshold: 100.0]])], failNoReports: true, failUnhealthy: true, failUnstable: true, globalThresholds: [[failUnhealthy: true, thresholdTarget: 'Line', unhealthyThreshold: 100.0, unstableThreshold: 100.0]], skipPublishingChecks: true, sourceFileResolver: sourceFiles('STORE_LAST_BUILD')
             }
         }
     }
