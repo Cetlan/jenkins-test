@@ -3,12 +3,14 @@ pipeline {
     stages {
         stage("Multisystem Pipeline") {
             matrix {
-                agent any
                 axes {
                     axis {
                         name 'PYTHON'
                         values 'python2.7.12', 'python3.6'
                     }
+                }
+                agent {
+                    label "${PYTHON}-agent"
                 }
                 stages {
                     stage("Setup Virtual Environment") {
