@@ -25,7 +25,7 @@ pipeline {
                 withPythonEnv("System-CPython-2.7") {
                     sh 'coverage xml'
                 }
-                publishCoverage adapters: [istanbulCoberturaAdapter(path: '**/coverage.xml', thresholds: [[failUnhealthy: true, thresholdTarget: 'Line', unhealthyThreshold: 100.0, unstableThreshold: 100.0]])], failNoReports: true, failUnhealthy: true, failUnstable: true, globalThresholds: [[failUnhealthy: true, thresholdTarget: 'Line', unhealthyThreshold: 100.0, unstableThreshold: 100.0]], skipPublishingChecks: true, sourceFileResolver: sourceFiles('STORE_LAST_BUILD')
+                publishCoverage adapters: [coberturaAdapter('**/coverage.xml')], calculateDiffForChangeRequests: true, failBuildIfCoverageDecreasedInChangeRequest: true, failNoReports: true, failUnstable: true, globalThresholds: [[failUnhealthy: true, thresholdTarget: 'Aggregated Report', unstableThreshold: 86.0]], sourceFileResolver: sourceFiles('STORE_LAST_BUILD')
             }
         }
     }
